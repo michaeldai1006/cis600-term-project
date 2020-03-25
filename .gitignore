@@ -1,2 +1,5 @@
 # Mac file system
 .DS_Store
+
+#MySQL Workbench backup file
+*.mwb.bak
