@@ -6,10 +6,10 @@ import time
 
 # This login class is modified from Cookbook
 def oauth_login():
-    CONSUMER_KEY = 'HNOzTzdbHUoCnFTHIKRoHFyLg'
-    CONSUMER_SECRET = '4Mo6tbiy3lWwEbJtGOCLe95y6BBxnTK1CozPaoVBTOs9PTPq72'
-    OAUTH_TOKEN = '1220717065809645570-hmKAr1PWSoKxD5CxqjLWLmK1ToVJZT'
-    OAUTH_TOKEN_SECRET = 'K4fA7bTyA0i2xzXnEc5RTYC6D2nhjwsSSPrRJmJnusuJV'
+    CONSUMER_KEY = '...'
+    CONSUMER_SECRET = '...'
+    OAUTH_TOKEN = '...'
+    OAUTH_TOKEN_SECRET = '...'
 
     auth = twitter.oauth.OAuth(OAUTH_TOKEN, OAUTH_TOKEN_SECRET,
                                CONSUMER_KEY, CONSUMER_SECRET)
