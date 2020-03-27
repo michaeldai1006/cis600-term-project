@@ -2,9 +2,10 @@ const db = require('../services/db.conn');
 const md5 = require('md5');
 
 class C6Hashtag {
-    constructor(hasttag_token, hashtag_id) {
+    constructor(hasttag_token, hashtag_id, text) {
         this.hasttag_token = hasttag_token;
         this.hashtag_id = hashtag_id;
+        this.text = text;
     }
 
     async registerHashtag(hashtag_info, tweet_id) {
@@ -49,6 +50,10 @@ class C6Hashtag {
         } catch (err) {
             throw err;
         }
+    }
+
+    async findHashtagDetailWithText() {
+        // TODO:
     }
 }
 

@@ -2,9 +2,10 @@ const db = require('../services/db.conn');
 const md5 = require('md5');
 
 class C6User {
-    constructor(user_token, user_id) {
+    constructor(user_token, user_id, tw_user_id) {
         this.user_token = user_token;
         this.user_id = user_id;
+        this.tw_user_id = tw_user_id;
     }
 
     async registerUser(user_info) {
@@ -48,6 +49,10 @@ class C6User {
         } catch (err) {
             throw err;
         }
+    }
+
+    async findUserDetailWithTWUserId() {
+        // TODO:
     }
 }
 
