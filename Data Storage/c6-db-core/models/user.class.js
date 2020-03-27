@@ -29,7 +29,6 @@ class C6User {
             if (!insert_id) throw new Error('INSERT USER RECORD FAILED');
             this.tweet_id = insert_id;
 
-
             // User token
             const user_token = `USR-${md5('' + insert_id + tw_user_id + 'kud')}`;
             this.user_token = user_token;
