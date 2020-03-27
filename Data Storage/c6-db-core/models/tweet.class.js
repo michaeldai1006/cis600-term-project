@@ -19,7 +19,7 @@ class C6Tweet {
             // Insert query
             const insertQuery = `
                 INSERT INTO c6_tweet (tw_tweet_id, text, latitude, longitude, lang, created_at, user_id, place_id, cdate, udate, status)
-                VALUSE (${tw_tweet_id}, '${text}', ${latitude}, ${longitude}, '${lang}', ${created_at}, ${user_id}, ${place_id}, NOW(), NOW(), 0)
+                VALUSE (${tw_tweet_id}, '${text}', ${latitude}, ${longitude}, '${lang}', '${created_at}', ${user_id}, ${place_id}, NOW(), NOW(), 0)
             `;
 
             // Perform insert query
