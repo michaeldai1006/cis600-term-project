@@ -32,7 +32,7 @@ class C6Tweet {
 
 
             // Tweet token
-            const tweet_token = `TWT-${'' + insert_id + tw_tweet_id + 'dsk'}`;
+            const tweet_token = `TWT-${md5('' + insert_id + tw_tweet_id + 'dsk')}`;
             this.tweet_token = tweet_token;
 
             // Update query: tweet token, udate, status
