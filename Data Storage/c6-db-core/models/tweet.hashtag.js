@@ -72,12 +72,10 @@ class C6TweetHashtag {
             // Record not found
             if (!record) return record;
 
-            // Tweet hashtag id, token and tweet id hashtag id for current instance
-            const { tweet_hashtag_id, tweet_hashtag_token, tweet_id, hashtag_id } = record;
+            // Tweet hashtag id, token for current instance
+            const { tweet_hashtag_id, tweet_hashtag_token } = record;
             this.tweet_hashtag_id = tweet_hashtag_id;
             this.tweet_hashtag_token = tweet_hashtag_token;
-            this.tweet_id = tweet_id;
-            this.hashtag_id = hashtag_id;
 
             // Found instance
             return record;
