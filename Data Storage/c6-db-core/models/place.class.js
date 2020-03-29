@@ -53,7 +53,35 @@ class C6Place {
     }
 
     async findPlaceDetailWithTWPlaceId() {
-        // TODO:
+        // Verify tw place id
+        if (!this.tw_place_id) throw new Error('MISSING TW PLACE ID');
+
+        try {
+            // Find query
+            const findQuery = `
+                SELECT id AS place_id, place_token, latitude1, latitude2, latitude3, latitude4, longitude1, longitude2, longitude3, longitude4, tw_place_id, url, place_type, name, full_name, country_code, country, cdate, udate, status
+                FROM c6_place
+                WHERE tw_place_id = '${this.tw_place_id}'
+                AND status = 1
+                LIMIT 0, 1
+            `;
+
+            // Perform query
+            const [record] = await db.performQuery(findQuery);
+
+            // Record not found
+            if (!record) return record;
+
+            // Place id, token for current instance
+            const { place_id, place_token } = record;
+            this.place_id = place_id;
+            this.place_token = place_token;
+
+            // Found instance
+            return record;
+        } catch(err) {
+            throw err;
+        }
     }
 }
 
