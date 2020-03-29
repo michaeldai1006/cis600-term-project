@@ -52,7 +52,35 @@ class C6User {
     }
 
     async findUserDetailWithTWUserId() {
-        // TODO:
+        // Verify tw user id
+        if (!this.tw_user_id) throw new Error('MISSING TW USER ID');
+
+        try {
+            // Find query
+            const findQuery = `
+                SELECT id AS user_id, user_token, tw_user_id, user_name, screen_name, location, description, followers_count, friends_count, created_at, cdate, udate, status
+                FROM c6_user
+                WHERE tw_user_id = '${this.tw_user_id}'
+                AND status = 1
+                LIMIT 0, 1
+            `;
+
+            // Perform query
+            const [record] = await db.performQuery(findQuery);
+
+            // Record not found
+            if (!record) return record;
+
+            // User id, token for current instance
+            const { user_id, user_token } = record;
+            this.user_id = user_id;
+            this.user_token = user_token;
+
+            // Found instance
+            return record;
+        } catch (err) {
+            throw err;
+        }
     }
 }
 
