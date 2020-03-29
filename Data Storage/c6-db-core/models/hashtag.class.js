@@ -8,10 +8,9 @@ class C6Hashtag {
         this.text = text;
     }
 
-    async registerHashtag(hashtag_info, tweet_id) {
+    async registerHashtag(hashtag_info) {
         // Verify hashtag info
         if (!hashtag_info) throw new Error('MISSING HASHTAG INFO');
-        if (!tweet_id) throw new Error('MISSING TWEET ID');
 
         try {
             // Extract info from hashtag info
@@ -19,8 +18,8 @@ class C6Hashtag {
 
             // Insert query
             const insertQuery = `
-                INSERT INTO c6_hashtag(text, tweet_id, cdate, udate, status)
-                VALUSE ('${text}', ${tweet_id}, NOW(), NOW(), 0)
+                INSERT INTO c6_hashtag(text, cdate, udate, status)
+                VALUSE ('${text}', NOW(), NOW(), 0)
             `;
 
             // Perform insert query
@@ -59,15 +58,26 @@ class C6Hashtag {
         try {
             // Find query
             const findQuery = `
-                SELECT id AS hashtag_id, hashtag_token, text, tweet_id, 
-                FROM da_user
-                WHERE user_token = '${this.user_token}'
-                AND status = 2
+                SELECT id AS hashtag_id, hashtag_token, text, cdate, udate, status 
+                FROM c6_hashtag
+                WHERE text = '${this.text}'
+                AND status = 1
                 LIMIT 0, 1
             `;
 
             // Perform query
             const [record] = await db.performQuery(findQuery);
+
+            // Record not found
+            if (!record) return record;
+
+            // Hashtag id, token for current instance
+            const { hashtag_id, hashtag_token } = record;
+            this.hashtag_id = hashtag_id;
+            this.hashtag_token = hashtag_token;
+
+            // Found instance
+            return record;
         } catch (err) {
             throw err;
         }
