@@ -53,7 +53,24 @@ class C6Hashtag {
     }
 
     async findHashtagDetailWithText() {
-        // TODO:
+        // Verify text existence
+        if (!this.text) throw new Error('MISSING TEXT');
+
+        try {
+            // Find query
+            const findQuery = `
+                SELECT id AS hashtag_id, hashtag_token, text, tweet_id, 
+                FROM da_user
+                WHERE user_token = '${this.user_token}'
+                AND status = 2
+                LIMIT 0, 1
+            `;
+
+            // Perform query
+            const [record] = await db.performQuery(findQuery);
+        } catch (err) {
+            throw err;
+        }
     }
 }
 
