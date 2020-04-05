@@ -3,3 +3,6 @@
 
 #MySQL Workbench backup file
 *.mwb.bak
+
+#ENV file
+.env
