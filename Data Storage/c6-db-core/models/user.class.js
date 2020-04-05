@@ -14,12 +14,12 @@ class C6User {
 
         try {
             // Extract info from user info
-            const { tw_user_id, user_name, screen_name, location, description, followers_count, friends_count, created_at } = user_info;
+            const { tw_user_id, name, screen_name, location, description, followers_count, friends_count, created_at } = user_info;
 
             // Insert query
             const insertQuery = `
-                INSERT INTO c6_user(tw_user_id, user_name, screen_name, location, description, followers_count, friends_count, created_at, cdate, udate, status)
-                VALUSE (${tw_user_id}, '${user_name}', '${screen_name}', '${location}', '${description}', ${followers_count}, ${friends_count}, '${created_at}', NOW(), NOW(), 0)
+                INSERT INTO c6_user(tw_user_id, name, screen_name, location, description, followers_count, friends_count, created_at, cdate, udate, status)
+                VALUSE (${tw_user_id}, '${name}', '${screen_name}', '${location}', '${description}', ${followers_count}, ${friends_count}, '${created_at}', NOW(), NOW(), 0)
             `;
 
             // Perform insert query
@@ -58,7 +58,7 @@ class C6User {
         try {
             // Find query
             const findQuery = `
-                SELECT id AS user_id, user_token, tw_user_id, user_name, screen_name, location, description, followers_count, friends_count, created_at, cdate, udate, status
+                SELECT id AS user_id, user_token, tw_user_id, name, screen_name, location, description, followers_count, friends_count, created_at, cdate, udate, status
                 FROM c6_user
                 WHERE tw_user_id = '${this.tw_user_id}'
                 AND status = 1
