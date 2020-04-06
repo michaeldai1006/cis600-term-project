@@ -11,7 +11,7 @@ class C6TweetAction {
         // Verify record list
         if (!record_list) throw new Error('MISSING RECORD LIST');
         if (!Array.isArray(record_list)) throw new Error('RECORD LIST FORMAT INVALID');
-        if (record_list.length < 1 || record_list.length > 50) throw new Error('RECORD LIST HAS A SIZE LIMIT OF 1 TO 50');
+        if (record_list.length < 1 || record_list.length > 15) throw new Error('RECORD LIST HAS A SIZE LIMIT OF 1 TO 15');
 
         try {
             // Iterate through records
