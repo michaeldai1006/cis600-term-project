@@ -29,12 +29,24 @@ class C6TweetAction {
 
     static async _regitserRecord(record) {
         // Extra parts from record
-        const { id, user, place, extended_tweet, entities } = record;
+        const { id_str: id, user, place, extended_tweet, entities } = record;
 
         // Verify required objects
+        if (!id) return `RECORD INVALID, MISSING TWEET ID`;
         if (!user) return `RECORD WITH ID: ${id || 'UNKNOWN'} INVALID, MISSING USER OBJECT`;
 
         try {
+            // Search for tweet record from db
+            const tweet_obj = new C6Tweet(undefined, undefined, id);
+            const tweet_record = await tweet_obj.findTweetDetailWithTWTweetId();
+            if (tweet_record) {
+                const { tweet_token } = tweet_record;
+
+                console.log('Old record found:', tweet_token);
+
+                if (tweet_token) return tweet_token;
+            }
+
             // Register user
             const user_id = await C6TweetAction._registerUser(user);
             if (!user_id) return `REGISTER RECORD WITH ID: ${id || 'UNKNOWN'} FAILED, REGISTER USER FAILED`;
