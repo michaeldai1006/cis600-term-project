@@ -1,5 +1,6 @@
 const C6User = require('../models/user.class');
 const C6Place = require('../models/place.class');
+const C6Tweet = require('../models/tweet.class');
 const moment = require('moment');
 const StrHelper = require('../helpers/str.help');
 
@@ -39,6 +40,10 @@ class C6TweetAction {
             // Register place
             let place_id = undefined;
             if (place) place_id = await C6TweetAction._registerPlace(place);
+
+            // Register tweet
+            const tweet_id = await C6TweetAction._registerTweet(record, user_id, place_id);
+            console.log('tweet_id', tweet_id);
         } catch (err) {
             return err.message || `UNKNOWN ERROR OCCURED WHILE REGISTERING RECORD WITH ID: ${id}`;
         }
@@ -102,6 +107,47 @@ class C6TweetAction {
 
             // Place id result
             return place.place_id;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    static async _registerTweet(tweet_data, user_id, place_id) {
+        // Verify tweet
+        let { id_str: id, text, extended_tweet, coordinates, lang, created_at } = tweet_data;
+        if (!id) throw new Error('REGISTER TWEET FAILED, TWEET ID NOT PROVIDED');
+
+        try {
+            // Replace text with extended tweet
+            if (extended_tweet) {
+                if (extended_tweet['full_text']) {
+                    text = extended_tweet['full_text'];
+                }
+            }
+
+            // Parse coordinates
+            let longitude = undefined;
+            let latitude = undefined;
+            if (coordinates) {
+                if (coordinates['coordinates']) {
+                    longitude = coordinates['coordinates'][0];
+                    latitude = coordinates['coordinates'][1]
+                }
+            }
+
+            // Register new place record
+            const tweet = new C6Tweet(undefined, undefined);
+            await tweet.registerTweet({
+                tw_tweet_id: id, 
+                text: StrHelper.escapeSingleQuote(text), 
+                latitude, 
+                longitude, 
+                lang, 
+                created_at: moment(created_at, 'dd MMM DD HH:mm:ss ZZ YYYY', 'en').utc().format('YYYY-MM-DD HH:mm:ss')
+            }, user_id, place_id);
+
+            // Tweet id result
+            return tweet.tweet_id;
         } catch (err) {
             throw err;
         }
