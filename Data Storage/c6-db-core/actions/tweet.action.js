@@ -1,6 +1,8 @@
 const C6User = require('../models/user.class');
 const C6Place = require('../models/place.class');
 const C6Tweet = require('../models/tweet.class');
+const C6Hashtag = require('../models/hashtag.class');
+const C6TweetHashtag = require('../models/tweet.hashtag');
 const moment = require('moment');
 const StrHelper = require('../helpers/str.help');
 
@@ -27,7 +29,7 @@ class C6TweetAction {
 
     static async _regitserRecord(record) {
         // Extra parts from record
-        const { id, user, place } = record;
+        const { id, user, place, extended_tweet, entities } = record;
 
         // Verify required objects
         if (!user) return `RECORD WITH ID: ${id || 'UNKNOWN'} INVALID, MISSING USER OBJECT`;
@@ -44,6 +46,21 @@ class C6TweetAction {
             // Register tweet
             const tweet_id = await C6TweetAction._registerTweet(record, user_id, place_id);
             console.log('tweet_id', tweet_id);
+
+            // Hashtags object
+            let hashtags = undefined;
+            if (extended_tweet) {
+                if (extended_tweet['entities']) {
+                    hashtags = extended_tweet['entities']['hashtags'];
+                }
+            } else if (entities) {
+                if (entities['hashtags']) {
+                    hashtags = entities['hashtags'];
+                }
+            }
+
+            // Register hashtags
+            await C6TweetAction._registerHashtag(hashtags, tweet_id);
         } catch (err) {
             return err.message || `UNKNOWN ERROR OCCURED WHILE REGISTERING RECORD WITH ID: ${id}`;
         }
@@ -148,6 +165,39 @@ class C6TweetAction {
 
             // Tweet id result
             return tweet.tweet_id;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    static async _registerHashtag(hashtag_data, tweet_id) {
+        // Verify hashtag data
+        if (!Array.isArray(hashtag_data)) throw new Error('REGISTER HASHTAG FAILED, HASHTAG DATA INVALID');
+        if (!tweet_id) throw new Error('REGISTER HASHTAG FAILED, MISSING TWEET ID');
+
+        try {
+            // Hash tag instances
+            const hashtags = hashtag_data.map(hashtag => new C6Hashtag(undefined, undefined, hashtag['text']));
+
+            // Search for hashtag records in db
+            await Promise.all(hashtags.map(hashtag => hashtag.findHashtagDetailWithText()));
+
+            // Register new hashtags
+            await Promise.all(hashtags.map(hashtag => {
+                if (!hashtag.hashtag_id) {
+                    return hashtag.registerHashtag({ text: hashtag.text });
+                } else {
+                    return
+                }
+            }));
+
+            // Register tweet hashtags
+            await Promise.all(hashtags.map(hashtag => {
+                if (hashtag.hashtag_id) {
+                    const tweetHashtag = new C6TweetHashtag(tweet_id, hashtag.hashtag_id);
+                    return tweetHashtag.registerTweetHashtag();
+                }
+            }));
         } catch (err) {
             throw err;
         }
