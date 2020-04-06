@@ -24,7 +24,6 @@ class C6TweetAction {
             // Process data in series
             const result_list = [];
             for (let i = 0; i < record_list.length; i++) {
-                console.log('Processing data:', i);
                 const result = await C6TweetAction._regitserRecord(record_list[i]);
                 result_list.push(result);
             }
