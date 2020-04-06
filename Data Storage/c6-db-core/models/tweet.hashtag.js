@@ -18,7 +18,7 @@ class C6TweetHashtag {
             // Insert query
             const insertQuery = `
                 INSERT INTO c6_tweet_hashtag(tweet_id, hashtag_id, cdate, udate, status)
-                VALUSE (${this.tweet_id}, ${this.hashtag_id}, NOW(), NOW(), 0)
+                VALUE (${this.tweet_id}, ${this.hashtag_id}, NOW(), NOW(), 0)
             `;
 
             // Perform insert query

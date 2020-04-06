@@ -8,6 +8,9 @@ const pool = mysql.createPool({
 });
 
 const performQuery = (query) => {
+    // Remove undefined VARCHAR values
+    query = query.replace(/'undefined'/g, 'NULL');
+
     return new Promise((resolve, reject) => {
         pool.getConnection((err, conn) => {
             if (err) {

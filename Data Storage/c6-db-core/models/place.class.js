@@ -14,13 +14,12 @@ class C6Place {
 
         try {
             // Extract info from place info
-            const { latitude1, latitude2, latitude3, latitude4, longitude1, longitude2, longitude3, longitude4, 
-            tw_place_id, url, place_type, name, full_name, country_code, country } = place_info;
+            const { bounding_box, tw_place_id, url, place_type, name, full_name, country_code, country } = place_info;
 
             // Insert query
             const insertQuery = `
-                INSERT INTO c6_place(latitude1, latitude2, latitude3, latitude4, longitude1, longitude2, longitude3, longitude4, tw_place_id, url, place_type, name, full_name, country_code, country, cdate, udate, status)
-                VALUSE (${latitude1}, ${latitude2}, ${latitude3}, ${latitude4}, ${longitude1}, ${longitude2}, ${longitude3}, ${longitude4}, ${tw_place_id}, '${url}', '${place_type}', '${name}', '${full_name}', '${country_code}', '${country}', NOW(), NOW(), 0)
+                INSERT INTO c6_place(bounding_box, tw_place_id, url, place_type, name, full_name, country_code, country, cdate, udate, status)
+                VALUE ('${bounding_box}', '${tw_place_id}', '${url}', '${place_type}', '${name}', '${full_name}', '${country_code}', '${country}', NOW(), NOW(), 0)
             `;
 
             // Perform insert query
@@ -59,7 +58,7 @@ class C6Place {
         try {
             // Find query
             const findQuery = `
-                SELECT id AS place_id, place_token, latitude1, latitude2, latitude3, latitude4, longitude1, longitude2, longitude3, longitude4, tw_place_id, url, place_type, name, full_name, country_code, country, cdate, udate, status
+                SELECT id AS place_id, place_token, bounding_box , tw_place_id, url, place_type, name, full_name, country_code, country, cdate, udate, status
                 FROM c6_place
                 WHERE tw_place_id = '${this.tw_place_id}'
                 AND status = 1

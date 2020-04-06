@@ -19,7 +19,7 @@ class C6Hashtag {
             // Insert query
             const insertQuery = `
                 INSERT INTO c6_hashtag(text, cdate, udate, status)
-                VALUSE ('${text}', NOW(), NOW(), 0)
+                VALUE ('${text}', NOW(), NOW(), 0)
             `;
 
             // Perform insert query

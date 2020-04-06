@@ -19,7 +19,7 @@ class C6User {
             // Insert query
             const insertQuery = `
                 INSERT INTO c6_user(tw_user_id, name, screen_name, location, description, followers_count, friends_count, created_at, cdate, udate, status)
-                VALUSE (${tw_user_id}, '${name}', '${screen_name}', '${location}', '${description}', ${followers_count}, ${friends_count}, '${created_at}', NOW(), NOW(), 0)
+                VALUES ('${tw_user_id}', '${name}', '${screen_name}', '${location}', '${description}', ${followers_count || 'NULL'}, ${friends_count || 'NULL'}, '${created_at}', NOW(), NOW(), 0)
             `;
 
             // Perform insert query
@@ -28,7 +28,7 @@ class C6User {
             // Insert ID
             const insert_id = insertQueryRes['insertId'];
             if (!insert_id) throw new Error('INSERT USER RECORD FAILED');
-            this.tweet_id = insert_id;
+            this.user_id = insert_id;
 
             // User token
             const user_token = `USR-${md5('' + insert_id + tw_user_id + 'kud')}`;

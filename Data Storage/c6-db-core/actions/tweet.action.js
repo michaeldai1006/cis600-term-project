@@ -1,4 +1,7 @@
 const C6User = require('../models/user.class');
+const C6Place = require('../models/place.class');
+const moment = require('moment');
+const StrHelper = require('../helpers/str.help');
 
 class C6TweetAction {
     static async registerTweets(record_list) {
@@ -9,7 +12,7 @@ class C6TweetAction {
 
         try {
             // Iterate through records
-            const request_list = record_list.map(record => C6TweetAction._regitserTweet(record));
+            const request_list = record_list.map(record => C6TweetAction._regitserRecord(record));
 
             // Make insert requests
             const result_list = await Promise.all(request_list);
@@ -21,22 +24,87 @@ class C6TweetAction {
         }
     }
 
-    static async _regitserTweet(record) {
+    static async _regitserRecord(record) {
         // Extra parts from record
-        const { id, user } = record;
+        const { id, user, place } = record;
 
-        // Verify user
+        // Verify required objects
         if (!user) return `RECORD WITH ID: ${id || 'UNKNOWN'} INVALID, MISSING USER OBJECT`;
 
         try {
-            await _registerUser(user);
+            // Register user
+            const user_id = await C6TweetAction._registerUser(user);
+            if (!user_id) return `REGISTER RECORD WITH ID: ${id || 'UNKNOWN'} FAILED, REGISTER USER FAILED`;
+
+            // Register place
+            let place_id = undefined;
+            if (place) place_id = await C6TweetAction._registerPlace(place);
         } catch (err) {
             return err.message || `UNKNOWN ERROR OCCURED WHILE REGISTERING RECORD WITH ID: ${id}`;
         }
     }
 
-    static async _registerUser(user) {
+    static async _registerUser(user_data) {
+        // Verify user
+        const { id_str: id, name, screen_name, location, description, followers_count, friends_count, created_at } = user_data;
+        if (!id) throw new Error('REGISTER USER FAILED, USER ID NOT PROVIDED');
 
+        try {
+            // Search for user from db
+            const user = new C6User(undefined, undefined, id);
+            const user_record = await user.findUserDetailWithTWUserId();
+            if (user_record) return user.user_id;
+
+            // Register new user record
+            await user.registerUser({
+                tw_user_id: id, 
+                name: StrHelper.escapeSingleQuote(name), 
+                screen_name: StrHelper.escapeSingleQuote(screen_name), 
+                location: StrHelper.escapeSingleQuote(location), 
+                description: StrHelper.escapeSingleQuote(description), 
+                followers_count, 
+                friends_count, 
+                created_at: moment(created_at, 'dd MMM DD HH:mm:ss ZZ YYYY', 'en').utc().format('YYYY-MM-DD HH:mm:ss')
+            });
+
+            // User id result
+            return user.user_id;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    static async _registerPlace(place_data) {
+        // Verify place
+        let { id, bounding_box, url, place_type, name, full_name, country_code, country } = place_data;
+        if (!id) throw new Error('REGISTER PLACE FAILED, PLACE ID NOT PROVIDED');
+
+        try {
+            // Search for place from db
+            const place = new C6Place(undefined, undefined, id);
+            const place_record = await place.findPlaceDetailWithTWPlaceId();
+            if (place_record) return place.place_id;
+
+            // Stringify bounding box
+            if (bounding_box) bounding_box = JSON.stringify(bounding_box);
+
+            // Register new place record
+            await place.registerPlace({
+                tw_place_id: id, 
+                bounding_box: StrHelper.escapeSingleQuote(bounding_box), 
+                url: StrHelper.escapeSingleQuote(url), 
+                place_type: StrHelper.escapeSingleQuote(place_type), 
+                name: StrHelper.escapeSingleQuote(name), 
+                full_name: StrHelper.escapeSingleQuote(full_name), 
+                country_code: StrHelper.escapeSingleQuote(country_code), 
+                country: StrHelper.escapeSingleQuote(country)
+            });
+
+            // Place id result
+            return place.place_id;
+        } catch (err) {
+            throw err;
+        }
     }
 }
 
