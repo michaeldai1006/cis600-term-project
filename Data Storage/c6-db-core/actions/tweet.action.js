@@ -17,8 +17,16 @@ class C6TweetAction {
             // Iterate through records
             const request_list = record_list.map(record => C6TweetAction._regitserRecord(record));
 
-            // Make insert requests
-            const result_list = await Promise.all(request_list);
+            // Process data in parallel
+            // // Make insert requests
+            // const result_list = await Promise.all(request_list);
+
+            // Process data in series
+            const result_list = [];
+            for (let i = 0; i < record_list.length; i++) {
+                const result = await C6TweetAction._regitserRecord(record_list[i]);
+                result_list.push(result);
+            }
 
             // Requests result
             return { result_list };
