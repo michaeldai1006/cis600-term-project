@@ -1,6 +1,10 @@
 class StrHelper {
     static escapeSingleQuote(str) {
-        return str.replace(/'/g, "\\'");
+        if (str) {
+            return str.replace(/'/g, "\\'");
+        } else {
+            return str;
+        }
     }
 }
 
