@@ -158,7 +158,7 @@ class C6TweetAction {
             }
 
             // Register new place record
-            const tweet = new C6Tweet(undefined, undefined);
+            const tweet = new C6Tweet(undefined, undefined, id);
             await tweet.registerTweet({
                 tw_tweet_id: id, 
                 text: StrHelper.escapeSingleQuote(text), 

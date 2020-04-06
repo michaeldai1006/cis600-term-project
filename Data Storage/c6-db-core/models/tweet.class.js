@@ -2,9 +2,10 @@ const db = require('../services/db.conn');
 const md5 = require('md5');
 
 class C6Tweet {
-    constructor(tweet_token, tweet_id) {
+    constructor(tweet_token, tweet_id, tw_tweet_id) {
         this.tweet_token = tweet_token;
         this.tweet_id = tweet_id;
+        this.tw_tweet_id = tw_tweet_id;
     }
 
     async registerTweet(tweet_info, user_id, place_id) {
@@ -47,6 +48,38 @@ class C6Tweet {
 
             // Tweet token result
             return tweet_token;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async findTweetDetailWithTWTweetId() {
+        // Verify tw tweet id
+        if (!this.tw_tweet_id) throw new Error('MISSING TW TWEET ID');
+
+        try {
+            // Find query
+            const findQuery = `
+                SELECT id AS tweet_id, tweet_token, tw_tweet_id, text, longitude, latitude, lang, created_at, cdate, udate, status
+                FROM c6_tweet
+                WHERE tw_tweet_id = '${this.tw_tweet_id}'
+                AND status = 1
+                LIMIT 0, 1
+            `;
+
+            // Perform query
+            const [record] = await db.performQuery(findQuery);
+
+            // Record not found
+            if (!record) return record;
+
+            // Tweet id, token for current instance
+            const { tweet_id, tweet_token } = record;
+            this.tweet_id = tweet_id;
+            this.tweet_token = tweet_token;
+
+            // Found instance
+            return record;
         } catch (err) {
             throw err;
         }
