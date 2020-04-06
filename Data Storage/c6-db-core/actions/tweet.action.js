@@ -41,9 +41,6 @@ class C6TweetAction {
             const tweet_record = await tweet_obj.findTweetDetailWithTWTweetId();
             if (tweet_record) {
                 const { tweet_token } = tweet_record;
-
-                console.log('Old record found:', tweet_token);
-
                 if (tweet_token) return tweet_token;
             }
 
