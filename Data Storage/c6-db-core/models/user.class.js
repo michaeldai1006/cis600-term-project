@@ -64,7 +64,7 @@ class C6User {
                 AND status = 1
                 LIMIT 0, 1
             `;
-
+            
             // Perform query
             const [record] = await db.performQuery(findQuery);
 

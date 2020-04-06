@@ -15,7 +15,7 @@ class C6TweetAction {
 
         try {
             // Iterate through records
-            const request_list = record_list.map(record => C6TweetAction._regitserRecord(record));
+            // const request_list = record_list.map(record => C6TweetAction._regitserRecord(record));
 
             // Process data in parallel
             // // Make insert requests
@@ -24,6 +24,7 @@ class C6TweetAction {
             // Process data in series
             const result_list = [];
             for (let i = 0; i < record_list.length; i++) {
+                console.log('Processing data:', i);
                 const result = await C6TweetAction._regitserRecord(record_list[i]);
                 result_list.push(result);
             }
@@ -36,7 +37,7 @@ class C6TweetAction {
     }
 
     static async _regitserRecord(record) {
-        // Extra parts from record
+        // Extract parts from record
         const { id_str: id, user, place, extended_tweet, entities } = record;
 
         // Verify required objects
