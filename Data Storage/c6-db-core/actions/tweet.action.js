@@ -44,8 +44,10 @@ class C6TweetAction {
             if (place) place_id = await C6TweetAction._registerPlace(place);
 
             // Register tweet
-            const tweet_id = await C6TweetAction._registerTweet(record, user_id, place_id);
-            console.log('tweet_id', tweet_id);
+            const tweet = await C6TweetAction._registerTweet(record, user_id, place_id);
+            const { tweet_id, tweet_token } = tweet;
+            if (!tweet_id) return `REGISTER RECORD WITH ID: ${id || 'UNKNOWN'} FAILED, REGISTER TWEET FAILED`;
+            if (!tweet_token) return `REGISTER RECORD WITH ID: ${id || 'UNKNOWN'} FAILED, REGISTER TWEET FAILED`;
 
             // Hashtags object
             let hashtags = undefined;
@@ -61,6 +63,9 @@ class C6TweetAction {
 
             // Register hashtags
             await C6TweetAction._registerHashtag(hashtags, tweet_id);
+
+            // Tweet token result
+            return tweet_token;
         } catch (err) {
             return err.message || `UNKNOWN ERROR OCCURED WHILE REGISTERING RECORD WITH ID: ${id}`;
         }
@@ -163,8 +168,8 @@ class C6TweetAction {
                 created_at: moment(created_at, 'dd MMM DD HH:mm:ss ZZ YYYY', 'en').utc().format('YYYY-MM-DD HH:mm:ss')
             }, user_id, place_id);
 
-            // Tweet id result
-            return tweet.tweet_id;
+            // Tweet instance result
+            return tweet;
         } catch (err) {
             throw err;
         }
