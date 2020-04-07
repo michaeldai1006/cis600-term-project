@@ -198,28 +198,68 @@ class C6TweetAction {
         if (!tweet_id) throw new Error('REGISTER HASHTAG FAILED, MISSING TWEET ID');
 
         try {
+            // // Hash tag instances
+            // const hashtags = hashtag_data.map(hashtag => new C6Hashtag(undefined, undefined, hashtag['text']));
+
+            // // Search for hashtag records in db
+            // await Promise.all(hashtags.map(hashtag => hashtag.findHashtagDetailWithText()));
+
+            // // Register new hashtags
+            // await Promise.all(hashtags.map(hashtag => {
+            //     if (!hashtag.hashtag_id) {
+            //         return hashtag.registerHashtag({ text: hashtag.text });
+            //     } else {
+            //         return
+            //     }
+            // }));
+
+            // // Register tweet hashtags
+            // await Promise.all(hashtags.map(hashtag => {
+            //     if (hashtag.hashtag_id) {
+            //         const tweetHashtag = new C6TweetHashtag(tweet_id, hashtag.hashtag_id);
+            //         return tweetHashtag.registerTweetHashtag();
+            //     }
+            // }));
+
+            // Process in series
             // Hash tag instances
             const hashtags = hashtag_data.map(hashtag => new C6Hashtag(undefined, undefined, hashtag['text']));
 
             // Search for hashtag records in db
-            await Promise.all(hashtags.map(hashtag => hashtag.findHashtagDetailWithText()));
+            // await Promise.all(hashtags.map(hashtag => hashtag.findHashtagDetailWithText()));
+            for (let i = 0; i < hashtags.length; i++) {
+                await hashtags[i].findHashtagDetailWithText()
+            }
 
             // Register new hashtags
-            await Promise.all(hashtags.map(hashtag => {
-                if (!hashtag.hashtag_id) {
-                    return hashtag.registerHashtag({ text: hashtag.text });
+            // await Promise.all(hashtags.map(hashtag => {
+            //     if (!hashtag.hashtag_id) {
+            //         return hashtag.registerHashtag({ text: hashtag.text });
+            //     } else {
+            //         return
+            //     }
+            // }));
+            for (let i = 0; i < hashtags.length; i++) {
+                if (!hashtags[i].hashtag_id) {
+                    await hashtags[i].registerHashtag({ text: hashtags[i].text });
                 } else {
-                    return
+                    continue;
                 }
-            }));
+            }
 
             // Register tweet hashtags
-            await Promise.all(hashtags.map(hashtag => {
-                if (hashtag.hashtag_id) {
-                    const tweetHashtag = new C6TweetHashtag(tweet_id, hashtag.hashtag_id);
-                    return tweetHashtag.registerTweetHashtag();
-                }
-            }));
+            // await Promise.all(hashtags.map(hashtag => {
+            //     if (hashtag.hashtag_id) {
+            //         const tweetHashtag = new C6TweetHashtag(tweet_id, hashtag.hashtag_id);
+            //         return tweetHashtag.registerTweetHashtag();
+            //     }
+            // }));
+            for (let i = 0; i < hashtags.length; i++) {
+                if (hashtags[i].hashtag_id) {
+                    const tweetHashtag = new C6TweetHashtag(tweet_id, hashtags[i].hashtag_id);
+                    await tweetHashtag.registerTweetHashtag();
+                }            
+            }
         } catch (err) {
             throw err;
         }
