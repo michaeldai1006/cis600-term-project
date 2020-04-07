@@ -4,11 +4,12 @@ import sys
 import twitter
 import time
 import json
+import traceback
 import requests
 from keys import *
 
 # Constants
-POST_JSON_LEN = 15
+POST_JSON_LEN = 1
 
 
 twitter_api = oauth_login()
@@ -69,8 +70,7 @@ try:
             print(json.dumps(tweet))
 
             post_json_body_list.append(tweet)
-            f.write("\n")
-            f.write(json.dumps(tweet))
+            f.write("\n" + json.dumps(tweet))
 
             if len(post_json_body_list) == POST_JSON_LEN:
                 post_json = {"record_list": post_json_body_list}
@@ -84,8 +84,12 @@ try:
         print("{:.3f}s:  virus-related posts = {}, virus-related percentage = {:.2f}%".format(time.time() - start_time, virus_post_count, virus_post_count/total_post_count * 100))
         sys.stdout.flush()
 except:
-    f.write("An exception occurred")
-    print("An exception occurred")
+    f.write("\nAn exception occurred")
+    exceptf = open("exception.txt", "a")
+    traceback.print_exc(file=sys.stdout)
+    traceback.print_exc(file=exceptf)
+    exceptf.close()
+    raise
 finally:
     f.close()
 
