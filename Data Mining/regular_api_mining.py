@@ -11,14 +11,15 @@ from http.client import BadStatusLine
 from keys import *
 
 # Constants
+SQL_STORAGE_PERCENTAGE = 0.1
 SQL_API_DATA_COUNT_PER_REQUEST = 10
 TWITTER_REQUEST_COUNT = 100   # max = 100
 MAX_RESULTS = 190000000
-CURRENT_AREA = 7  # area code is from 0 to 10
+CURRENT_AREA = 1  # area code is from 0 to 10
 
 # record the oldest tweet id that have been searched (for debuging)
 MAX_ID = 2000000000000000000
-# MAX_ID = 1247935090681876483
+# MAX_ID = 1248383281097129985
 
 # New York state is divided into 11 circles
 # [latitude, longitude, radius]
@@ -40,6 +41,7 @@ class SqlApiException (Exception):
 def send_to_sql_api(statuses):
     if len(statuses) == 0:
         return
+    statuses = statuses[0: max(1, int(len(statuses) * SQL_STORAGE_PERCENTAGE))]
     left = 0
     right = SQL_API_DATA_COUNT_PER_REQUEST
     while right <= len(statuses):
@@ -83,7 +85,7 @@ def make_twitter_request(twitter_api_func, max_errors=10, *args, **kw):
             if sleep_when_rate_limited:
                 print("Retrying in 15 minutes...ZzZ...", file=sys.stderr)
                 sys.stderr.flush()
-                time.sleep(60 * 15 + 5)
+                time.sleep(60 * 5 + 5)
                 print('...ZzZ...Awake now and trying again.', file=sys.stderr)
                 return 2
             else:
