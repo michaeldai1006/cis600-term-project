@@ -3,19 +3,14 @@
 import sys
 import twitter
 import time
+import json
+import traceback
+import requests
+from keys import *
 
-# This login class is modified from Cookbook
-def oauth_login():
-    CONSUMER_KEY = '...'
-    CONSUMER_SECRET = '...'
-    OAUTH_TOKEN = '...'
-    OAUTH_TOKEN_SECRET = '...'
+# Constants
+POST_JSON_LEN = 4
 
-    auth = twitter.oauth.OAuth(OAUTH_TOKEN, OAUTH_TOKEN_SECRET,
-                               CONSUMER_KEY, CONSUMER_SECRET)
-
-    twitter_api = twitter.Twitter(auth=auth)
-    return twitter_api
 
 twitter_api = oauth_login()
 
@@ -50,30 +45,59 @@ loc = '-79.76,42,-79.05,42.84,-79.04,42,-76.8,43.63,-76.7,42,-73.2,45,-75.3,41.2
 print('Filtering the public location for locations={0}'.format(loc), file=sys.stderr)
 sys.stderr.flush()
 
-# stream = twitter_stream.statuses.filter(track=q)
-stream = twitter_stream.statuses.filter(locations = loc)
+while True:
+    # stream = twitter_stream.statuses.filter(track=q)
+    stream = twitter_stream.statuses.filter(locations = loc)
 
 
-keywords = ['virus', 'pandemic']
-total_post_count = 0
-virus_post_count = 0
-start_time = time.time()
+    f = open("log.txt","a")
+    keywords = ["virus", "pandemic","COVID", "Coronavirus", "COVID-19","Quarantine","mask","StayHome"]
+    total_post_count = 0
+    virus_post_count = 0
+    start_time = time.time()
+    post_json_body_list = []
 
-for tweet in stream:
-    # print(tweet)
-    total_post_count += 1
-    text = tweet['text']
-    if 'extended_tweet' in tweet:
-        text = tweet['extended_tweet']['full_text']
+    try:
+        for tweet in stream:
+            # print(tweet)
+            total_post_count += 1
+            if 'text' not in tweet:
+                continue
+            text = tweet['text']
+            if 'extended_tweet' in tweet:
+                text = tweet['extended_tweet']['full_text']
 
-    if any(keyword in text for keyword in keywords):
-        virus_post_count += 1
-        print("Post text: {}".format(text))
-    print("{:.3f}s:  virus-related posts = {}, virus-related percentage = {:.2f}%".format(time.time() - start_time, virus_post_count, virus_post_count/total_post_count * 100))
+            if any(keyword in text for keyword in keywords):
+                virus_post_count += 1
+                print(time.strftime("%H:%M:%S", time.localtime()))
+                print("Post text: {}".format(text))
+                print(json.dumps(tweet))
 
-    sys.stdout.flush()
+                post_json_body_list.append(tweet)
+                f.write("\n" + json.dumps(tweet))
 
-    # Save to a database in a particular collection
+                if len(post_json_body_list) == POST_JSON_LEN:
+                    post_json = {"record_list": post_json_body_list}
+                    print(json.dumps(post_json))
+                    r = requests.post(DATABASE_API_URL, json=post_json)
+                    print(r.status_code)
+                    print(r.text)
+
+                    post_json_body_list.clear()
+
+            print("{:.3f}s:  virus-related posts = {}, virus-related percentage = {:.2f}%".format(time.time() - start_time, virus_post_count, virus_post_count/total_post_count * 100))
+            sys.stdout.flush()
+    except:
+        f.write("\nAn exception occurred")
+        exceptf = open("exception.txt", "a")
+        traceback.print_exc(file=sys.stdout)
+        traceback.print_exc(file=exceptf)
+        exceptf.close()
+    finally:
+        f.close()
+
+    print("streaming API not responding, sleep for 5 min.........................")
+    time.sleep(60*5 + 5)
 
 
 
