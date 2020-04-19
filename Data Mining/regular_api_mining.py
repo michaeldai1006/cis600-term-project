@@ -15,11 +15,11 @@ SQL_STORAGE_PERCENTAGE = 0.1
 SQL_API_DATA_COUNT_PER_REQUEST = 10
 TWITTER_REQUEST_COUNT = 100   # max = 100
 MAX_RESULTS = 190000000
-CURRENT_AREA = 1  # area code is from 0 to 10
+CURRENT_AREA = 0  # area code is from 0 to 10
 
 # record the oldest tweet id that have been searched (for debuging)
 MAX_ID = 2000000000000000000
-# MAX_ID = 1248383281097129985
+# MAX_ID = 1248626983518363649
 
 # New York state is divided into 11 circles
 # [latitude, longitude, radius]
@@ -42,6 +42,7 @@ def send_to_sql_api(statuses):
     if len(statuses) == 0:
         return
     statuses = statuses[0: max(1, int(len(statuses) * SQL_STORAGE_PERCENTAGE))]
+    f.write("\n" + json.dumps(statuses))
     left = 0
     right = SQL_API_DATA_COUNT_PER_REQUEST
     while right <= len(statuses):
@@ -157,7 +158,6 @@ def twitter_search(twitter_api, q, geocode, max_results=200, max_id = MAX_ID, **
         send_to_sql_api(statuses)
         if len(statuses) > 0:
             print(json.dumps(statuses[0]))
-        f.write("\n" + json.dumps(statuses))
         print(tweet_count)
 
         try:
