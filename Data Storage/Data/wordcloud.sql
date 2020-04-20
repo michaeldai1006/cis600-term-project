@@ -1,3 +1,8 @@
+#
+# John D'Amaro
+# CIS600 Final Project
+#
+
 ## Experiment and test
 
 ## Hashtags by Date
@@ -5,7 +10,7 @@ SELECT c6_tweet.created_at AS TweetDate, c6_hashtag.text AS Hashtag, count(c6_tw
 FROM c6_tweet JOIN c6_tweet_hashtag AS link 
 	ON c6_tweet.id = link.tweet_id
     JOIN c6_hashtag ON link.hashtag_id = c6_hashtag.id
-WHERE DAY(c6_tweet.created_at) = 18
+WHERE DAY(c6_tweet.created_at) = 1
 GROUP BY c6_hashtag.text, DAY(c6_tweet.created_at) 
 ORDER BY TweetDate DESC, Hashtag
 
