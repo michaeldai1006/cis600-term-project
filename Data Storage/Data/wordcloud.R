@@ -12,7 +12,7 @@ library(RColorBrewer)
 
 setwd("C:\\Users\\user\\Desktop\\CIS600TermProject\\Data Storage\\Data\\")
 
-day.data <- read.csv(paste0("18April.csv")
+day.data <- read.csv(paste0("2April.csv")
                     , header = TRUE
                     , stringsAsFactors = FALSE)
 
