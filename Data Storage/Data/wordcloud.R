@@ -8,14 +8,16 @@ install.packages("wordcloud")
 install.packages("stringr")
 library(stringr)
 library(wordcloud)
+library(RColorBrewer)
 
 setwd("C:\\Users\\user\\Desktop\\CIS600TermProject\\Data Storage\\Data\\")
 
-day.data <- read.csv(paste0("7April.csv")
+day.data <- read.csv(paste0("18April.csv")
                     , header = TRUE
                     , stringsAsFactors = FALSE)
 
-## Change datetime to only date
+## Data Cleaning
+day.data$Hashtag[day.data$Hashtag == "COVIDãf¼19"] <- "COVID--19"
 day.data$TweetDate <- as.Date(day.data$TweetDate)
 
 ## Order Data by Hashtag Frequency
@@ -25,10 +27,8 @@ day.data <- day.data[order(day.data$HashtagFreq, decreasing = TRUE), ]
 zap <- which(day.data$HashtagFreq < 5)
 day.data <- day.data[-zap, ]
 
-## Log Scale
-day.data$HashtagFreq <- log(day.data$HashtagFreq)
-## Sqrt Scale
-day.data$HashtagFreq <- day.data$HashtagFreq^(1/1.7)
+## Scale
+day.data$HashtagFreq <- day.data$HashtagFreq^(1/2.5)
 
 ## Wordcloud Plot
 par(mar = c(0,0,0,0), bg = "black")
@@ -38,8 +38,8 @@ myPalFun <- colorRampPalette(
 wordcloud(day.data$Hashtag, freq = day.data$HashtagFreq
           , min.freq = 1, scale = c(4,0.6)
           , max.words = Inf, random.order = F
-          , ordered.colors = T
-          , rot.per = 0.15, 
+          , ordered.colors = T, rot.per = 0.15, 
           , colors = myPalFun(length(day.data$HashtagFreq)))
 
-
+## c("chartreuse2", "deepskyblue", "forestgreen")
+## color palette everyone likes
