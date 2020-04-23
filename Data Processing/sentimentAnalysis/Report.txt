@@ -1,2 +1,0 @@
-vaderSentiment tested on Stanford's testing dataset(1600000 tweets) has an accuracy of 0.707954
-textblob tested on Stanford's testing dataset(1600000 tweets) has an accuracy of 0.681082, but much slower, too many non
