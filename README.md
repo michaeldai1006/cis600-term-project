@@ -26,4 +26,5 @@ Data Processing
 5.2. Open covid19_ny_ChoroplethMap_SingleDay.ipynb under geo-analysis/Covid10_NY directory with Jupyter Notebook (very important!). Run it.
 
 Data Storage
-Inside 
+The Data Storage subfolder consists of two parts. "c6-db-core", which is the core backend service of the project provides a RESTful API for posting tweets data and data parsing program which cleans up data and saves them to our MySQL database. "c6-db-model", which is our MySQL database schema design file editable by using the official MySQL client MySQLWorkbench.
+Here we provide some details of how to run the c6-db-core project on any machine with any mainstream OS installed.
