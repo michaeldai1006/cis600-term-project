@@ -24,3 +24,6 @@ Data Processing
 4. Run sentiment_main.py under sentiment analysis directory for sentiment analysis.
 5.1. Run geo_main.py under geo_analysis for geo visualization preperation.
 5.2. Open covid19_ny_ChoroplethMap_SingleDay.ipynb under geo-analysis/Covid10_NY directory with Jupyter Notebook (very important!). Run it.
+
+Data Storage
+Inside 
