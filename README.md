@@ -30,7 +30,7 @@ The Data Storage subfolder consists of two parts. "c6-db-core", which is the cor
 
 Here we provide some details of how to run the c6-db-core project on any machine with any mainstream OS installed. We assume you have access to the bash shell and ready to interact with it by using the command-line interface.
 
-## NodeJS
+### NodeJS
 The project is built upon NodeJS, we recommend use tool nvm to manage your node environment.
 
 1. Install nvm:	 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash 
