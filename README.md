@@ -1,7 +1,7 @@
 # cis600-term-project
 SU CIS600 Term Project
 
-Data Mining
+## Data Mining
 1. Ask for key.py from me.
 2. Put key.py in the same file with straming_mining.py and regular_api_mining.py.
 3. Open Python terminal console, enter:
@@ -9,7 +9,7 @@ Data Mining
   pip install urllib.error
 4. Run straming_mining.py or regular_api_mining.py.
 
-Data Processing
+## Data Processing
 1. Ask for key.py from me.
 2. Put key.py in sentiment_analysis directory
 3. Make sure mySQL connector for pyhton is installed on your computer: https://dev.mysql.com/downloads/
@@ -36,19 +36,19 @@ The project is built upon NodeJS, we recommend use tool nvm to manage your node 
 1. Install nvm:	 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash 
 2. Install NodeJS: nvm install 10.15.3
 
-## Git Clone
+### Git Clone
 Clone our project to your local machine by using git, which we assume you have the tool already installed on your local machine.
 
 1. Clone：git clone https://github.com/michaeldai1006/cis600-term-project.git
 2. Switch to project directory: cd "./cis600-term-project/Data Storage/c6-db-core"
 
-## Install dependencies
+### Install dependencies
 A few npm dependencies are required to run the project
 1. Install all dependencies: npm install
 
-## Require ENV file from the project administrator
+### Require ENV file from the project administrator
 Sensitive information of the project is defined within a file named ".ENV". Request for this file from the project administrator and add it to the corresponding project directory.
 
-## Run project
+### Run project
 Now its finally time to run the project, by default port 3000 will be used to listen to requests.
 1. To run the project: npm start
