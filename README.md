@@ -10,7 +10,7 @@ SU CIS600 Term Project
 4. Run "straming_mining.py" or "regular_api_mining.py" to mine tweets with coresponding API.
 
 ## Data Processing
-1. Ask for "key.py" from zli221su@gmail.com if it is not in "Data Processing/data_processing" folder.  
+1. Ask for "key.py" from zli221su@gmail.com if it is not in "Data Processing/data_processing/sentiment_analysis" folder.  
 2. Copy "key.py" to "Data Processing/data_processing/sentiment_analysis" directory  
 3. Make sure mySQL connector for pyhton is installed on your computer: https://dev.mysql.com/downloads/  
 3. Install Dependencies: Open Python 3 terminal console, enter:  
