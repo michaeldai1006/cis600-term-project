@@ -4,23 +4,23 @@ SU CIS600 Term Project
 ## Data Mining
 1. Ask for "key.py" from zli221su@gmail.com if it is not in "Data Mining" folder.
 2. Copy "key.py" to "Data Mining" folder.
-3. Install Dependencies: Open Python 3 terminal console, enter:
-  pip install twitter
-  pip install urllib.error
+3. Install Dependencies: Open Python 3 terminal console, enter:  
+  pip install twitter  
+  pip install urllib.error  
 4. Run "straming_mining.py" or "regular_api_mining.py" to mine tweets with coresponding API.
 
 ## Data Processing
 1. Ask for "key.py" from zli221su@gmail.com if it is not in "Data Processing/data_processing" folder.
 2. Copy "key.py" to "Data Processing/data_processing/sentiment_analysis" directory
 3. Make sure mySQL connector for pyhton is installed on your computer: https://dev.mysql.com/downloads/
-3. Install Dependencies: Open Python 3 terminal console, enter:
-  pip install pandas
-  pip install mysql
-  pip install vaderSentiment
-  pip install textblob
-  pip install plotly.express
-  pip install nltk.tokenize
-  pip install urllib.request
+3. Install Dependencies: Open Python 3 terminal console, enter:  
+  pip install pandas  
+  pip install mysql  
+  pip install vaderSentiment  
+  pip install textblob  
+  pip install plotly.express  
+  pip install nltk.tokenize  
+  pip install urllib.request  
 4. Run "sentiment_main.py" under "Data Processing/data_processing/sentiment_analysis" directory for sentiment analysis.
 5.1. Run "geo_main.py" under "Data Processing/data_processing/geo_analysis" for geo visualization preperation.
 5.2. Open "covid19_ny_ChoroplethMap_SingleDay.ipynb" under "geo-analysis/Covid10_NY" directory with Jupyter Notebook (Other IDEs may cause unexpected errors). Jupyter Note Book can be download from: https://jupyter.org/
