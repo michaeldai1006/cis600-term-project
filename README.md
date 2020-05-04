@@ -40,7 +40,7 @@ Sensitive information of the project is defined within a file named ".ENV". Requ
 
 ### Run project
 Now its finally time to run the project, by default port 3000 will be used to listen to requests.
-1. To run the project: npm start
+1. To run the project: npm start  
 
 
 ## Data Processing
