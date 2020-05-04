@@ -14,39 +14,6 @@ In order to protect our Database Information and Twitter Developer Account, "key
 4. Run "straming_mining.py" or "regular_api_mining.py" to mine tweets with coresponding Twitter API.
 
 
-## Data Processing
-Data Processing part contains two parts: Sentiment Analysis and Choropleth Map Data Processing. These two parts are in the same sub-project, and they sharing the same "key.py" file and "constants.py" file. Thus the following three steps are required before running either of Sentiment Analysis or Choropleth Map.  
-In order to protect our Database Information and Twitter Developer Account, "key.py" file is not included in github version for this project.  
-
-1. Ask for "key.py" from zli221su@gmail.com if it is NOT in "Data Processing/data_processing/sentiment_analysis" folder.  
-2. Copy "key.py" to "Data Processing/data_processing/sentiment_analysis" directory  
-3. Make sure mySQL connector for pyhton is installed on your computer: https://dev.mysql.com/downloads/  
-3. Install Dependencies: Open Python 3 terminal console, enter:  
-  pip install pandas  
-  pip install mysql  
-  pip install vaderSentiment  
-  pip install textblob  
-  pip install plotly.express  
-  pip install nltk.tokenize  
-  pip install urllib.request  
-4. Open constants.py with Notepad or similar editor. Change TODAY_MONTH and TODAY_DATE to today's month and date. This project currently works for 2020 only.  
-  
-### Sentiment ANalysis
-Run "sentiment_main.py" under "Data Processing/data_processing/sentiment_analysis" directory for sentiment analysis.  
-
-### Choropleth Map
-Run "geo_main.py" under "Data Processing/data_processing/geo_analysis" for geo visualization preperation.  
-Open "covid19_ny_ChoroplethMap_SingleDay.ipynb" under "geo-analysis/Covid10_NY" directory with Jupyter Notebook (Other IDEs may cause unexpected errors). Jupyter Note Book can be download from: https://jupyter.org/  
-
-
-## Data Visualization
-### R
-1. Install RStudio.
-2. Extract csv files from MySQL per each day of data.
-3. Edit line 15 of the import function to import specific data.
-4. Run program; save visual as PDF.
-
-
 ## Data Storage
 The Data Storage subfolder consists of two parts. "c6-db-core", which is the core backend service of the project provides a RESTful API for processing tweets data and post them to our MySQL database. "c6-db-model", which is our MySQL database schema design file editable by using the official MySQL client MySQLWorkbench.
 
@@ -74,3 +41,34 @@ Sensitive information of the project is defined within a file named ".ENV". Requ
 ### Run project
 Now its finally time to run the project, by default port 3000 will be used to listen to requests.
 1. To run the project: npm start
+
+
+## Data Processing
+Data Processing part contains three parts: Sentiment Analysis, Choropleth Map Data Processing Word Cloud. The first two parts are in the same sub-project, and they are sharing the same "key.py" file and "constants.py" file. Thus the following three steps are required before running either of Sentiment Analysis or Choropleth Map.  
+In order to protect our Database Information and Twitter Developer Account, "key.py" file is not included in github version for this project.  
+
+1. Ask for "key.py" from zli221su@gmail.com if it is NOT in "Data Processing/data_processing/sentiment_analysis" folder.  
+2. Copy "key.py" to "Data Processing/data_processing/sentiment_analysis" directory  
+3. Make sure mySQL connector for pyhton is installed on your computer: https://dev.mysql.com/downloads/  
+3. Install Dependencies: Open Python 3 terminal console, enter:  
+  pip install pandas  
+  pip install mysql  
+  pip install vaderSentiment  
+  pip install textblob  
+  pip install plotly.express  
+  pip install nltk.tokenize  
+  pip install urllib.request  
+4. Open constants.py with Notepad or similar editor. Change TODAY_MONTH and TODAY_DATE to today's month and date. This project currently works for 2020 only.  
+  
+### Sentiment Analysis
+Run "sentiment_main.py" under "Data Processing/data_processing/sentiment_analysis" directory for sentiment analysis.  
+
+### Choropleth Map
+Run "geo_main.py" under "Data Processing/data_processing/geo_analysis" for geo visualization preperation.  
+Open "covid19_ny_ChoroplethMap_SingleDay.ipynb" under "geo-analysis/Covid10_NY" directory with Jupyter Notebook (Other IDEs may cause unexpected errors). Jupyter Note Book can be download from: https://jupyter.org/  
+
+### Word CLoud with R
+1. Install RStudio.
+2. Extract csv files from MySQL per each day of data.
+3. Edit line 15 of the import function to import specific data.
+4. Run program; save visual as PDF.
