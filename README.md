@@ -39,17 +39,17 @@ A few npm dependencies are required to run the project
 Sensitive information of the project is defined within a file named ".ENV". Request for this file from the project administrator and add it to the corresponding project directory.
 
 ### Run project
-Now its finally time to run the project, by default port 3000 will be used to listen to requests.
+Now it's finally time to run the project, by default port 3000 will be used to listen to requests.
 1. To run the project: npm start  
 
 
 ## Data Processing
-Data Processing part contains three parts: Sentiment Analysis, Choropleth Map Data Processing Word Cloud. The first two parts are in the same sub-project, and they are sharing the same "key.py" file and "constants.py" file. Thus the following three steps are required before running either of Sentiment Analysis or Choropleth Map.  
+This Data Processing part contains three parts: Sentiment Analysis, Choropleth Map Data Processing Word Cloud. The first two parts are in the same sub-project, and they are sharing the same "key.py" file and "constants.py" file. Thus the following three steps are required before running either of Sentiment Analysis or Choropleth Map.  
 In order to protect our Database Information and Twitter Developer Account, "key.py" file is not included in the github version for this project.  
 
 1. Ask for "key.py" from zli221su@gmail.com if it is NOT in "Data Processing/data_processing/sentiment_analysis" folder.  
 2. Copy "key.py" to "Data Processing/data_processing/sentiment_analysis" directory  
-3. Make sure mySQL connector for pyhton is installed on your computer: https://dev.mysql.com/downloads/  
+3. Make sure mySQL connector for python is installed on your computer: https://dev.mysql.com/downloads/  
 3. Install Dependencies: Open Python 3 terminal console, enter:  
   pip install pandas  
   pip install mysql  
