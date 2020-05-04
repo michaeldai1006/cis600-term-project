@@ -61,15 +61,15 @@ In order to protect our Database Information and Twitter Developer Account, "key
 4. Open constants.py with Notepad or similar editor. Change TODAY_MONTH and TODAY_DATE to today's month and date. This project currently works for 2020 only.  
   
 ### Sentiment Analysis
-VaderSentiment and textblob are tested on both our manually marked 500 tweets and Stanford Sentiment140 Data Set. VaderSentiment has a better performance, so it is used for this sentiment analysis part. "sentiment_main.py" includes tests on the two analysis package (vaderSentiment and textblob), whole tweets analysis and daily tweets analysis. Output file locations will shown on the screen after the program finishes.  
+VaderSentiment and textblob are tested on both our manually marked 500 tweets and Stanford Sentiment140 Data Set. VaderSentiment has a better performance, so it is used for this sentiment analysis part. "sentiment_main.py" includes tests on the two analysis packages (vaderSentiment and textblob), whole tweets analysis and daily tweets analysis. Output file locations will be shown on the screen after the program finishes.
 
-Run "sentiment_main.py" under "Data Processing/data_processing/sentiment_analysis" directory for sentiment analysis.  
+1. Run "sentiment_main.py" under "Data Processing/data_processing/sentiment_analysis" directory for sentiment analysis.  
 
 ### Choropleth Map
-Choropleth Map shows the density of tweets on a New York State map. The darker, the 
+Choropleth Map shows the density of tweets on a New York State map (the blue map). Darker color on the map means more dense tweets there are. Red map is the confirmed case map, green maps are income map and population maps.  
 
-Run "geo_main.py" under "Data Processing/data_processing/geo_analysis" for geo visualization preparation.  
-Open "covid19_ny_ChoroplethMap_SingleDay.ipynb" under "geo-analysis/Covid10_NY" directory with Jupyter Notebook (Other IDEs may cause unexpected errors). Jupyter Note Book can be download from: https://jupyter.org/  
+1. Run "geo_main.py" under "Data Processing/data_processing/geo_analysis" for geo visualization preparation.  
+2. Open "covid19_ny_ChoroplethMap_SingleDay.ipynb" under "geo-analysis/Covid10_NY" directory with Jupyter Notebook (Other IDEs may cause unexpected errors). Jupyter Note Book can be download from: https://jupyter.org/  
 
 ### Word CLoud with R
 1. Install RStudio.
