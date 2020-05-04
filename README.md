@@ -29,7 +29,7 @@ In order to protect our Database Information and Twitter Developer Account, "key
   pip install plotly.express  
   pip install nltk.tokenize  
   pip install urllib.request  
-4. Open constants.py with Notepad or similar editor. Change TODAY_MONTH and TODAY_DATE to today's month and date. This project currently only works for the year 2020.  
+4. Open constants.py with Notepad or similar editor. Change TODAY_MONTH and TODAY_DATE to today's month and date. This project currently works for 2020 only.  
   
 ### Sentiment ANalysis
 Run "sentiment_main.py" under "Data Processing/data_processing/sentiment_analysis" directory for sentiment analysis.  
